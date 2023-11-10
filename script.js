@@ -1,3 +1,7 @@
+let num1;
+let num2;
+let operator;
+
 function add(...numbers) {
     return numbers.reduce((sum, currentVal) => sum + currentVal, 0);
 }
@@ -24,4 +28,11 @@ function divide(...numbers) {
         result = currentVal;
     }
     return result;
+}
+
+function operate(num1, operator, num2) {
+    if(operator === "+") add(num1, num2);
+    if(operator === "-") substract(num1, num2);
+    if(operator === "*") multiply(num1, num2);
+    if(operator === "/") divide(num1, num2);
 }
