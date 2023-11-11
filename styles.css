@@ -4,42 +4,48 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100vh;
+    background-color: #3f3dd4;
 }
 
 .screenContainer {
-    margin: -12px auto;
+    margin: -8px auto;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
-    width: 310px;
-    height: 120px;
-    background-color: #333;
+    border-radius: 2px;
+    width: 340px;
+    height: 140px;
+    background-color: #111;
 }
 
 .screen {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-size: 40px;
+    border-radius: 2px;
+    font-size: 58px;
     width: 80%;
     height: 50%;
-    border-bottom: 1px solid #000;
-    background-color: #84a177c9;
+    border: 2px solid #eb5f35;
+    color: #444;
+    background-color: #ade095c9;
 }
 
 .keysContainer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    border-bottom: 20px solid #333;
+    border-top: 10px solid #ddd;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 20px solid #ddd;
     border-radius: 10px;
-    background-color: #333;
+    background-color: #ddd;
 }
 
 .clearSection {
-    margin: 5px 5px 0 31px;
+    margin: 5px 5px 0 30px;
     display: flex;
 }
 
@@ -49,12 +55,12 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 310px;
-    height: 260px;
+    width: 338px;
+    height: 280px;
 }
 
 .numbers {
-    width: 65%;
+    width: 62%;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -67,6 +73,12 @@ body {
     align-items: center;
 }
 
+.btn:hover,
+.btnClear:hover {
+    cursor: pointer;
+    opacity: 60%;
+}
+
 .operations > .btn {
     background-color: #50c0ecef;
 }
@@ -75,15 +87,15 @@ body {
     margin: 5px;
     border-right: 0.5px solid #000;
     border-bottom: 0.5px solid #000;
-    width: 53px;
-    height: 53px;
+    width: 58px;
+    height: 58px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 32px;
+    font-weight: 700;
     color: #fff;
-    background-color: #888;
+    background-color: #3f3dd4;
     border-radius: 5px;
 }
 
@@ -91,8 +103,14 @@ body {
     margin: 5px;
     border-right: 0.5px solid #000;
     border-bottom: 0.5px solid #000;
-    width: 53px;
-    height: 27px;
+    width: 58px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
     background-color: #971010;
     border-radius: 5px;
 }
