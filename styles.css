@@ -1,0 +1,102 @@
+body {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.screenContainer {
+    margin: -12px auto;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 310px;
+    height: 120px;
+    background-color: #333;
+}
+
+.screen {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 40px;
+    width: 80%;
+    height: 50%;
+    border-bottom: 1px solid #000;
+    background-color: #84a177c9;
+}
+
+.keysContainer {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 20px solid #333;
+    border-radius: 10px;
+    background-color: #333;
+}
+
+.clearSection {
+    margin: 5px 5px 0 31px;
+    display: flex;
+}
+
+.calcBody {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 310px;
+    height: 260px;
+}
+
+.numbers {
+    width: 65%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.operations {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.operations > .btn {
+    background-color: #50c0ecef;
+}
+
+.btn {
+    margin: 5px;
+    border-right: 0.5px solid #000;
+    border-bottom: 0.5px solid #000;
+    width: 53px;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #888;
+    border-radius: 5px;
+}
+
+.btnClear {
+    margin: 5px;
+    border-right: 0.5px solid #000;
+    border-bottom: 0.5px solid #000;
+    width: 53px;
+    height: 27px;
+    background-color: #971010;
+    border-radius: 5px;
+}
+
+.btnEqual {
+    background-color: #ffae35;
+}
