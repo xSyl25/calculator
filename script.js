@@ -13,6 +13,11 @@ btns.forEach(btn => {
         if(screen.textContent.match(/[\/*\-+]$/) && btn.textContent.match(/[\/*+]/)) return;
         if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
         if(screen.textContent.length === 9 && btn.textContent !== "=") return;
+        if(screen.textContent.match(/[\/*+]$/) && btn.textContent === "-") {
+            concatNums += btn.textContent;
+            display(btn.textContent);
+            return;
+        }
         if(btn.textContent === "=") {
             operate(operation);
             return;
