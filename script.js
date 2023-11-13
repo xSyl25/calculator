@@ -5,6 +5,7 @@ let concatNums = "";
 let operator = "";
 let operation = [];
 let displayVal = "";
+let finalVal = 0;
 
 btns.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -80,8 +81,8 @@ function display(value) {
 
 function finalResult(value) {
     displayVal = "";
-    finalVal += parseInt(value);
-    operation = [];
-    operation.push(finalVal);
+    finalVal = parseInt(value);
     display(finalVal);
+    operation.splice(0, 3);
+    operation.unshift(finalVal);
 }
