@@ -1,24 +1,29 @@
 const btns = document.querySelectorAll(".btn");
 const screen = document.querySelector(".screen");
 
+let concatNums = "";
+let operator = "";
+let operation = [];
+let displayVal = "";
 
 btns.forEach(btn => {
     btn.addEventListener("click", () => {
-        if(!screen.textContent.match(/[0-9]$/) && btn.textContent.match(/[÷x+=]/)) return; 
-        if(screen.textContent.match(/[÷x\-+]$/) && btn.textContent.match(/[÷x+]$/)) return;
-        if(screen.textContent.match(/[\-]$/) && btn.textContent.match(/[\-]/)) return;
-        if(screen.textContent.length === 18) return;
+        if(!screen.textContent.match(/[0-9]/) && btn.textContent.match(/[\/*+]/)) return; 
+        if(screen.textContent.match(/[\/*\-+]$/) && btn.textContent.match(/[\/*+]/)) return;
+        if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
+        if(screen.textContent.length === 9 && btn.textContent !== "=") return;
+        if(btn.textContent === "=") {
+            operate(operation);
+            return;
+        }
+        storeVal(btn.textContent);
         display(btn.textContent);
     })
 });
 
-let num1;
-let num2;
-let operator;
-let displayVal = [];
-
 function add(...numbers) {
-    return numbers.reduce((sum, currentVal) => sum + currentVal, 0);
+    let result = numbers.reduce((sum, currentVal) => parseInt(sum) + parseInt(currentVal), 0);
+    finalResult(result);
 }
 
 function substract(...numbers) {
@@ -26,13 +31,14 @@ function substract(...numbers) {
     let result;
     for(i = 1; i < numbers.length; i++) {
         currentVal -= numbers[i];
-        result = currentVal;
+        result = parseInt(currentVal);
     }
-    return result;
+    finalResult(result);
 }
 
 function multiply(...numbers) {
-    return numbers.reduce((total, currentVal) => total * currentVal, 1);
+    let result = numbers.reduce((total, currentVal) => parseInt(total) * parseInt(currentVal), 1);
+    finalResult(result);
 }
 
 function divide(...numbers) {
@@ -40,21 +46,42 @@ function divide(...numbers) {
     let result;
     for(i = 1; i < numbers.length; i++) {
         currentVal /= numbers[i];
-        result = currentVal;
+        result = parseInt(currentVal);
     }
-    return result;
+    finalResult(result);
 }
 
-function operate(num1, operator, num2) {
-    if(operator === "+") add(num1, num2);
-    if(operator === "-") substract(num1, num2);
-    if(operator === "*") multiply(num1, num2);
-    if(operator === "/") divide(num1, num2);
+function operate([num1, operator, num2]) {
+    if(operator === "+") return add(num1, num2);
+    if(operator === "-") return substract(num1, num2);
+    if(operator === "*") return multiply(num1, num2);
+    if(operator === "/") return divide(num1, num2);
+}
+
+function storeVal(value) {
+    if(value.match(/[0-9]/) || value === ".") {
+        concatNums += value;
+    } else {
+        operation.push(parseInt(concatNums));
+        concatNums = "";
+        operator = value;
+        operation.push(operator);
+    }
+    console.log(operation);
+    if(operation.length > 3) {
+        operate(operation);
+    }
 }
 
 function display(value) {
-    if(screen.textContent.length === 9) screen.style.fontSize = "44px";
-    if(screen.textContent.length === 12) screen.style.fontSize = "35px";
-    if(screen.textContent.length === 15) screen.style.fontSize = "29px";
-    displayVal = screen.textContent += value;
+    displayVal += value;
+    screen.textContent = displayVal;
+}
+
+function finalResult(value) {
+    displayVal = "";
+    finalVal += parseInt(value);
+    operation = [];
+    operation.push(finalVal);
+    display(finalVal);
 }

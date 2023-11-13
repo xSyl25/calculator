@@ -28,6 +28,7 @@ body {
     width: 80%;
     height: 50%;
     border: 2px solid #eb5f35;
+    overflow: hidden;
     color: #444;
     background-color: #ade095c9;
 }
@@ -45,7 +46,7 @@ body {
 }
 
 .clearSection {
-    margin: 5px 5px 0 30px;
+    margin: 5px 5px 0 32px;
     display: flex;
 }
 
