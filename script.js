@@ -1,7 +1,7 @@
 const btns = document.querySelectorAll(".btn");
 const screen = document.querySelector(".screen");
 
-let concatNums = "";
+let concatNum = "";
 let operator = "";
 let operation = [];
 let displayVal = "";
@@ -14,18 +14,28 @@ btns.forEach(btn => {
         if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
         if(screen.textContent.length === 9 && btn.textContent !== "=") return;
         if(screen.textContent.match(/[\/*+]$/) && btn.textContent === "-") {
-            concatNums += btn.textContent;
-            display(btn.textContent);
-            return;
+            concatNum += btn.textContent;
+            return display(btn.textContent);
+        }
+        if(btn.textContent === "C") {
+            return clear();
         }
         if(btn.textContent === "=") {
-            operate(operation);
-            return;
+            return operate(operation);
         }
         storeVal(btn.textContent);
         display(btn.textContent);
     })
 });
+
+function clear() {
+    concatNum = "";
+    operator = "";
+    operation = [];
+    displayVal = "";
+    finalVal = 0;
+    screen.textContent = "";
+}
 
 function add(...numbers) {
     let result = numbers.reduce((sum, currentVal) => parseInt(sum) + parseInt(currentVal), 0);
@@ -66,14 +76,13 @@ function operate([num1, operator, num2]) {
 
 function storeVal(value) {
     if(value.match(/[0-9]/) || value === ".") {
-        concatNums += value;
+        concatNum += value;
     } else {
-        operation.push(parseInt(concatNums));
-        concatNums = "";
+        operation.push(parseInt(concatNum));
+        concatNum = "";
         operator = value;
         operation.push(operator);
     }
-    console.log(operation);
     if(operation.length > 3) {
         operate(operation);
     }
