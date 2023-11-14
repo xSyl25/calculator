@@ -12,7 +12,7 @@ btns.forEach(btn => {
         if(!screen.textContent.match(/[0-9]/) && btn.textContent.match(/[\/*+]/)) return; 
         if(screen.textContent.match(/[\/*\-+]$/) && btn.textContent.match(/[\/*+]/)) return;
         if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
-        if(screen.textContent.length === 9 && btn.textContent !== "=") return;
+        if(screen.textContent.length === 12 && btn.textContent !== "=") return;
         if(screen.textContent.match(/[\/*+]$/) && btn.textContent === "-") {
             concatNum += btn.textContent;
             return display(btn.textContent);
@@ -38,8 +38,8 @@ function clear() {
 }
 
 function add(...numbers) {
-    let result = numbers.reduce((sum, currentVal) => parseInt(sum) + parseInt(currentVal), 0);
-    finalResult(result);
+    let result = numbers.reduce((sum, currentVal) => parseFloat(sum) + parseFloat(currentVal), 0);
+    isWhole(result);
 }
 
 function substract(...numbers) {
@@ -47,14 +47,14 @@ function substract(...numbers) {
     let result;
     for(i = 1; i < numbers.length; i++) {
         currentVal -= numbers[i];
-        result = parseInt(currentVal);
+        result = parseFloat(currentVal);
     }
-    finalResult(result);
+    isWhole(result);
 }
 
 function multiply(...numbers) {
-    let result = numbers.reduce((total, currentVal) => parseInt(total) * parseInt(currentVal), 1);
-    finalResult(result);
+    let result = numbers.reduce((total, currentVal) => parseFloat(total) * parseFloat(currentVal), 1);
+    isWhole(result);
 }
 
 function divide(...numbers) {
@@ -62,9 +62,9 @@ function divide(...numbers) {
     let result;
     for(i = 1; i < numbers.length; i++) {
         currentVal /= numbers[i];
-        result = parseInt(currentVal);
+        result = parseFloat(currentVal);
     }
-    finalResult(result);
+    isWhole(result);
 }
 
 function operate([num1, operator, num2]) {
@@ -78,13 +78,21 @@ function storeVal(value) {
     if(value.match(/[0-9]/) || value === ".") {
         concatNum += value;
     } else {
-        operation.push(parseInt(concatNum));
+        operation.push(concatNum);
         concatNum = "";
         operator = value;
         operation.push(operator);
     }
     if(operation.length > 3) {
         operate(operation);
+    }
+}
+
+function isWhole(value) {
+    if(value % 1 !== 0) {
+        return finalResult(value.toFixed(2));
+    } else {
+        return finalResult(Math.round(value));
     }
 }
 
@@ -95,7 +103,7 @@ function display(value) {
 
 function finalResult(value) {
     displayVal = "";
-    finalVal = parseInt(value);
+    finalVal = value;
     display(finalVal);
     operation.splice(0, 3);
     operation.unshift(finalVal);
