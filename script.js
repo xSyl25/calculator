@@ -1,27 +1,24 @@
 const btns = document.querySelectorAll(".btn");
 const screen = document.querySelector(".screen");
 
-let concatNum = "";
+let num1 = "";
+let num2 = "";
 let operator = "";
 let operation = [];
-let displayVal = "";
-let finalVal = 0;
+let displayValue = "";
+let finalValue = 0;
 
 btns.forEach(btn => {
     btn.addEventListener("click", () => {
-        if(!screen.textContent.match(/[0-9]/) && btn.textContent.match(/[\/*+]/)) return; 
+        if(screen.textContent === "" && btn.textContent.match(/[\/*+]/)) return; 
         if(screen.textContent.match(/[\/*\-+]$/) && btn.textContent.match(/[\/*+]/)) return;
         if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
-        if(screen.textContent.length === 12 && btn.textContent !== "=") return;
-        if(screen.textContent.match(/[\/*+]$/) && btn.textContent === "-") {
-            concatNum += btn.textContent;
-            return display(btn.textContent);
-        }
+        if(screen.textContent.length === 15 && !btn.textContent.match(/[C=]/)) return;
         if(btn.textContent === "C") {
             return clear();
         }
         if(btn.textContent === "=") {
-            return operate(operation);
+            return storeVal(btn.textContent);
         }
         storeVal(btn.textContent);
         display(btn.textContent);
@@ -29,20 +26,23 @@ btns.forEach(btn => {
 });
 
 function clear() {
-    concatNum = "";
+    num1 = "";
+    num2 = "";
     operator = "";
     operation = [];
-    displayVal = "";
-    finalVal = 0;
+    displayValue = "";
+    finalValue = 0;
     screen.textContent = "";
 }
 
-function add(...numbers) {
+function add(num1, num2) {
+    let numbers = [num1, num2];
     let result = numbers.reduce((sum, currentVal) => parseFloat(sum) + parseFloat(currentVal), 0);
     isWhole(result);
 }
 
-function substract(...numbers) {
+function substract(num1, num2) {
+    let numbers = [num1, num2];
     let currentVal = numbers[0];
     let result;
     for(i = 1; i < numbers.length; i++) {
@@ -52,12 +52,14 @@ function substract(...numbers) {
     isWhole(result);
 }
 
-function multiply(...numbers) {
+function multiply(num1, num2) {
+    let numbers = [num1, num2];
     let result = numbers.reduce((total, currentVal) => parseFloat(total) * parseFloat(currentVal), 1);
     isWhole(result);
 }
 
-function divide(...numbers) {
+function divide(num1, num2) {
+    let numbers = [num1, num2];
     let currentVal = numbers[0];
     let result;
     for(i = 1; i < numbers.length; i++) {
@@ -75,36 +77,53 @@ function operate([num1, operator, num2]) {
 }
 
 function storeVal(value) {
-    if(value.match(/[0-9]/) || value === ".") {
-        concatNum += value;
+    if(value === "=" && num2 !== "") {
+        operation.push(num2);
+        operate([num1, operator, num2]);
+        operator = "";
+        return num2 = "";
+    }
+    if(!value.match(/[\/*\-+=]/) && operator === "") {
+        return num1 += value;
+    }
+    if(value.match(/[\/*\-+]/)) {
+        if(operator === "") {
+            operator = value;
+            operation.push(num1);
+            return operation.push(operator);
+        } else {
+            operation.push(num2);
+            operate([num1, operator, num2]);
+            operator = value;
+            operation.push(operator);
+            return num2 = "";
+        }
+    }
+    if(!value.match(/[\/*\-+=]/) && operator !== "") {
+        return num2 += value;
+    }
+}
+
+function isWhole(number) {
+    if(number % 1 !== 0) {
+        return finalResult(number.toFixed(2));
     } else {
-        operation.push(concatNum);
-        concatNum = "";
-        operator = value;
-        operation.push(operator);
-    }
-    if(operation.length > 3) {
-        operate(operation);
+        return finalResult(Math.round(number));
     }
 }
 
-function isWhole(value) {
-    if(value % 1 !== 0) {
-        return finalResult(value.toFixed(2));
-    } else {
-        return finalResult(Math.round(value));
-    }
+function display(dVal) {
+    if(screen.textContent.length < 12) screen.style.fontSize = "45px";
+    if(screen.textContent.length > 12) screen.style.fontSize = "36px";
+    displayValue += dVal;
+    screen.textContent = displayValue;
 }
 
-function display(value) {
-    displayVal += value;
-    screen.textContent = displayVal;
-}
-
-function finalResult(value) {
-    displayVal = "";
-    finalVal = value;
-    display(finalVal);
+function finalResult(fVal) {
+    displayValue = "";
+    finalValue = fVal;
+    display(finalValue);
+    num1 = finalValue;
     operation.splice(0, 3);
-    operation.unshift(finalVal);
+    operation.unshift(num1);
 }
