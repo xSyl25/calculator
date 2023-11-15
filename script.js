@@ -113,17 +113,22 @@ function isWhole(number) {
 }
 
 function display(dVal) {
-    if(screen.textContent.length < 12) screen.style.fontSize = "45px";
+    if(screen.textContent.length < 12) screen.style.fontSize = "42px";
     if(screen.textContent.length > 12) screen.style.fontSize = "36px";
     displayValue += dVal;
     screen.textContent = displayValue;
 }
 
 function finalResult(fVal) {
+    if(typeof fVal !== "number") return error();
     displayValue = "";
     finalValue = fVal;
     display(finalValue);
     num1 = finalValue;
     operation.splice(0, 3);
     operation.unshift(num1);
+}
+
+const error = () => {
+    screen.textContent = "ERROR!";
 }
