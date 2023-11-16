@@ -12,12 +12,12 @@ btns.forEach(btn => {
         if(screen.textContent === "" && btn.textContent.match(/[\/*+]/)) return; 
         if(screen.textContent.match(/[\/*\-+]$/) && btn.textContent.match(/[\/*+]/)) return;
         if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
-        if(screen.textContent.length === 15 && !btn.textContent.match(/[C=]/)) return;
+        if(screen.textContent.length === 15 && !btn.textContent.match(/[C=DEL]/)) return;
         if(screen.textContent === "ERROR" && btn.textContent !== "C") return;
         if(btn.textContent === "C") {
             return clear();
         }
-        if(btn.textContent === "Del") {
+        if(btn.textContent === "DEL") {
             return del();
         }
         if(btn.textContent === "=") {
@@ -125,12 +125,12 @@ function storeVal(value) {
 
 function isWhole(number) {
     if(number % 1 !== 0) return finalResult(number.toFixed(2));
-    if(number % 1 === 0) return finalResult(Math.round(number));
+    if(number % 1 === 0) return finalResult(BigInt(number));
 }
 
 function display(dVal) {
-    if(screen.textContent.length < 12) screen.style.fontSize = "42px";
-    if(screen.textContent.length > 12) screen.style.fontSize = "36px";
+    if(screen.textContent.length < 11) screen.style.fontSize = "40px";
+    if(screen.textContent.length > 11) screen.style.fontSize = "32px";
     displayValue += dVal;
     screen.textContent = displayValue;
 }
