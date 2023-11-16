@@ -17,6 +17,9 @@ btns.forEach(btn => {
         if(btn.textContent === "C") {
             return clear();
         }
+        if(btn.textContent === "Del") {
+            return del();
+        }
         if(btn.textContent === "=") {
             return storeVal(btn.textContent);
         }
@@ -32,6 +35,22 @@ function clear() {
     displayValue = "";
     finalValue = 0;
     screen.textContent = "";
+}
+
+function del() {
+    screen.textContent = screen.textContent.slice(0, -1);
+    displayValue = displayValue.slice(0, -1);
+    
+    if(operator === "") {
+        let delVal = num1.split("").slice(0, -1).join().replaceAll(",", "");
+        return num1 = delVal;
+    } else if(operator !== "" && num2 === "") {
+        let delVal = operator.split("").slice(0, -1).join().replaceAll(",", "");
+        return operator = delVal;
+    } else {
+        let delVal = num2.split("").slice(0, -1).join().replaceAll(",", "");
+        return num2 = delVal;
+    }
 }
 
 function add(num1, num2) {
@@ -121,7 +140,7 @@ function finalResult(fVal) {
     displayValue = "";
     finalValue = fVal;
     display(finalValue);
-    num1 = finalValue;
+    num1 = finalValue.toString();
 }
 
 const error = () => {

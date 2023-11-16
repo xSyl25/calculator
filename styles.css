@@ -4,7 +4,7 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100vh;
-    background-color: #3f3dd4;
+    background-color: #47436d;
 }
 
 .screenContainer {
@@ -16,7 +16,7 @@ body {
     border-radius: 2px;
     width: 340px;
     height: 140px;
-    background-color: #111;
+    background-color: #181830;
 }
 
 .screen {
@@ -26,10 +26,10 @@ body {
     border-radius: 2px;
     width: 80%;
     height: 50%;
-    border: 2px solid #eb5f35;
+    border: 2px solid #ddd;
     overflow: hidden;
-    color: #444;
-    background-color: #ade095c9;
+    color: #333;
+    background-color: #9ed2ffb4;
 }
 
 .keysContainer {
@@ -41,7 +41,7 @@ body {
     border-right: 1px solid #000;
     border-bottom: 20px solid #ddd;
     border-radius: 10px;
-    background-color: #ddd;
+    background-color: #181830;
 }
 
 .clearSection {
@@ -99,7 +99,8 @@ body {
     border-radius: 5px;
 }
 
-.btnClear {
+.btnClear, 
+.btnDelete {
     margin: 5px;
     border-right: 0.5px solid #000;
     border-bottom: 0.5px solid #000;
@@ -111,7 +112,7 @@ body {
     font-size: 18px;
     font-weight: 700;
     color: #fff;
-    background-color: #971010;
+    background-color: #d42525;
     border-radius: 5px;
 }
 
