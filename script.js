@@ -125,7 +125,7 @@ function storeVal(value) {
 
 function isWhole(number) {
     if(number % 1 !== 0) return finalResult(number.toFixed(2));
-    if(number % 1 === 0) return finalResult(BigInt(number));
+    if(number % 1 === 0) return finalResult(Math.round(number));
 }
 
 function display(dVal) {
