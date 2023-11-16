@@ -4,7 +4,6 @@ const screen = document.querySelector(".screen");
 let num1 = "";
 let num2 = "";
 let operator = "";
-let operation = [];
 let displayValue = "";
 let finalValue = 0;
 
@@ -14,6 +13,7 @@ btns.forEach(btn => {
         if(screen.textContent.match(/[\/*\-+]$/) && btn.textContent.match(/[\/*+]/)) return;
         if(screen.textContent.match(/[\-]$/) && btn.textContent === "-") return;
         if(screen.textContent.length === 15 && !btn.textContent.match(/[C=]/)) return;
+        if(screen.textContent === "ERROR" && btn.textContent !== "C") return;
         if(btn.textContent === "C") {
             return clear();
         }
@@ -29,7 +29,6 @@ function clear() {
     num1 = "";
     num2 = "";
     operator = "";
-    operation = [];
     displayValue = "";
     finalValue = 0;
     screen.textContent = "";
@@ -77,39 +76,37 @@ function operate([num1, operator, num2]) {
 }
 
 function storeVal(value) {
-    if(value === "=" && num2 !== "") {
-        operation.push(num2);
-        operate([num1, operator, num2]);
-        operator = "";
-        return num2 = "";
-    }
     if(!value.match(/[\/*\-+=]/) && operator === "") {
+        if(value === "." && num1.includes(".")) return;
         return num1 += value;
     }
-    if(value.match(/[\/*\-+]/)) {
+    if(value.match(/[\/*\-+=]/)) {
+        if(value === "=" && num2 === "") {
+            return;
+        } else if(value === "=" && num2 !== "") {
+            operate([num1, operator, num2]);
+            operator = "";
+            return num2 = "";
+        }
         if(operator === "") {
-            operator = value;
-            operation.push(num1);
-            return operation.push(operator);
+            return operator = value;
+        } else if(value === "-" && num2 == ""){
+            return num2 = value;
         } else {
-            operation.push(num2);
             operate([num1, operator, num2]);
             operator = value;
-            operation.push(operator);
             return num2 = "";
         }
     }
-    if(!value.match(/[\/*\-+=]/) && operator !== "") {
+    if(!value.match(/[\/*+=]/) && operator !== "") {
+        if(value === "." && num2.includes(".")) return;
         return num2 += value;
     }
 }
 
 function isWhole(number) {
-    if(number % 1 !== 0) {
-        return finalResult(number.toFixed(2));
-    } else {
-        return finalResult(Math.round(number));
-    }
+    if(number % 1 !== 0) return finalResult(number.toFixed(2));
+    if(number % 1 === 0) return finalResult(Math.round(number));
 }
 
 function display(dVal) {
@@ -120,15 +117,14 @@ function display(dVal) {
 }
 
 function finalResult(fVal) {
-    if(typeof fVal !== "number") return error();
+    if(fVal === "Infinity") return error();
     displayValue = "";
     finalValue = fVal;
     display(finalValue);
     num1 = finalValue;
-    operation.splice(0, 3);
-    operation.unshift(num1);
 }
 
 const error = () => {
-    screen.textContent = "ERROR!";
+    clear();
+    screen.textContent = "ERROR";
 }
